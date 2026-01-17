@@ -9,7 +9,10 @@ const HomeScreen = () => {
     <View>
       <FlatList
         data={products}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        columnWrapperStyle={{ gap: 12 }}
+        contentContainerStyle={{ padding: 12 }}
         renderItem={({ item }) => (
           <ProductCard
             product={item}

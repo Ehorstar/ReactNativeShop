@@ -5,7 +5,7 @@ const ProductCard = ({ product, onProductPress }) => {
     <Pressable onPress={onProductPress} style={styles.card}>
       <Image source={{ uri: product.image }} style={styles.image} />
       <View style={styles.info}>
-        <Text style={styles.title}>{product.title}</Text>
+        <Text style={styles.title} numberOfLines={2}>{product.title}</Text>
         <Text style={styles.price}>${product.price}</Text>
       </View>
     </Pressable>
@@ -15,6 +15,7 @@ const ProductCard = ({ product, onProductPress }) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",
+    flex: 1,
     borderRadius: 12,
     overflow: "hidden",
     marginBottom: 16,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#2563eb",
+    color: "#5fa35f",
   },
 });
 
