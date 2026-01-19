@@ -1,13 +1,40 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import Button from "../UI/Button/Button";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import { useContext } from "react";
+import { FavouritesContext } from "../contexts/Favourites/FavouritesContext";
 
 const ProductCard = ({ product, onProductPress }) => {
+  const { inFavourites, addToFavourites, removeFromFavourites } =
+    useContext(FavouritesContext);
+
   return (
     <Pressable onPress={onProductPress} style={styles.card}>
       <Image source={{ uri: product.image }} style={styles.image} />
       <View style={styles.info}>
-        <Text style={styles.title} numberOfLines={2}>{product.title}</Text>
+        <Text style={styles.title} numberOfLines={2}>
+          {product.title}
+        </Text>
         <Text style={styles.price}>${product.price}</Text>
       </View>
+      <Button
+        variant="none"
+        icon={
+          inFavourites(product.id) ? (
+            <Fontisto name="heart" size={24} color="black" />
+          ) : (
+            <Fontisto name="heart-alt" size={24} color="black" />
+          )
+        }
+        style={{ position: "absolute", top: 2, right: 0 }}
+        onPress={() => {
+          if (inFavourites(product.id)) {
+            removeFromFavourites(product.id);
+          } else {
+            addToFavourites(product);
+          }
+        }}
+      />
     </Pressable>
   );
 };

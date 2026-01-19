@@ -1,13 +1,16 @@
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { products } from "../../data/products";
 import Button from "../../UI/Button/Button";
 import { useContext } from "react";
-import { CartContext } from "../../contexts/CartContext";
+import { CartContext } from "../../contexts/Cart/CartContext";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const ProductScreen = () => {
   const { id } = useLocalSearchParams();
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, isInCart } = useContext(CartContext);
+  const insets = useSafeAreaInsets();
+  const router = useRouter();
 
   const product = products.find((product) => product.id === id);
 
@@ -31,14 +34,15 @@ const ProductScreen = () => {
         <Text style={styles.text}>{product.description}</Text>
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer, { paddingBottom: insets.bottom }]}>
         <Text style={styles.price}>${product.price}</Text>
         <Button
-          text="Придбати"
+          text={isInCart(product.id) ? "В кошику" : "В кошик"}
           variant="primary"
           style={styles.button}
           onPress={() => {
             addToCart(product);
+            router.push("/cart");
           }}
         />
       </View>
