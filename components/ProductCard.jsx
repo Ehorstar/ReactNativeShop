@@ -20,7 +20,7 @@ const ProductCard = ({ product, onProductPress }) => {
       <Button
         variant="none"
         icon={
-          inFavourites(product.id) ? (
+          inFavourites(product._id) ? (
             <Fontisto name="heart" size={24} color="black" />
           ) : (
             <Fontisto name="heart-alt" size={24} color="black" />
@@ -28,8 +28,8 @@ const ProductCard = ({ product, onProductPress }) => {
         }
         style={{ position: "absolute", top: 2, right: 0 }}
         onPress={() => {
-          if (inFavourites(product.id)) {
-            removeFromFavourites(product.id);
+          if (inFavourites(product._id)) {
+            removeFromFavourites(product._id);
           } else {
             addToFavourites(product);
           }

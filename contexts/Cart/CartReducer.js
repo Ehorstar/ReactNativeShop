@@ -4,11 +4,11 @@ const CartReducer = (state, action) => {
       return action.payload;
 
     case "ADD_TO_CART":
-      const existingItem = state.find((item) => item.id === action.payload.id);
+      const existingItem = state.find((item) => item._id === action.payload._id);
 
       if (existingItem) {
         return state.map((item) =>
-          item.id === existingItem.id
+          item._id === existingItem._id
             ? { ...item, quantity: item.quantity + 1 }
             : item,
         );
@@ -16,19 +16,19 @@ const CartReducer = (state, action) => {
       return [...state, { ...action.payload, quantity: 1 }];
 
     case "REMOVE_FROM_CART":
-      return state.filter((item) => item.id !== action.payload);
+      return state.filter((item) => item._id !== action.payload);
     case "CLEAR_CART":
       return [];
     case "INCREMENT_QUANTITY":
       return state.map((item) =>
-        item.id === action.payload
+        item._id === action.payload
           ? { ...item, quantity: item.quantity + 1 }
           : item,
       );
     case "DECREMENT_QUANTITY":
       return state
         .map((item) =>
-          item.id === action.payload
+          item._id === action.payload
             ? { ...item, quantity: item.quantity - 1 }
             : item,
         )

@@ -16,21 +16,21 @@ const CartProvider = ({ children }) => {
     0,
   );
 
-  const isInCart = (id) => items.some((item) => item.id === id);
+  const isInCart = (_id) => items.some((item) => item._id === _id);
 
   const addToCart = (product) =>
     dispatch({ type: "ADD_TO_CART", payload: product });
 
-  const removeFromCart = (id) =>
-    dispatch({ type: "REMOVE_FROM_CART", payload: id });
+  const removeFromCart = (_id) =>
+    dispatch({ type: "REMOVE_FROM_CART", payload: _id });
 
   const clearCart = () => dispatch({ type: "CLEAR_CART" });
 
-  const incrementQuantity = (id) =>
-    dispatch({ type: "INCREMENT_QUANTITY", payload: id });
+  const incrementQuantity = (_id) =>
+    dispatch({ type: "INCREMENT_QUANTITY", payload: _id });
 
-  const decrementQuantity = (id) =>
-    dispatch({ type: "DECREMENT_QUANTITY", payload: id });
+  const decrementQuantity = (_id) =>
+    dispatch({ type: "DECREMENT_QUANTITY", payload: _id });
 
   return (
     <CartContext.Provider

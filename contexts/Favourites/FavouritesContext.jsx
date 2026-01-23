@@ -12,10 +12,10 @@ const FavouritesProvider = ({ children }) => {
   const addToFavourites = (product) =>
     dispatch({ type: "ADD_TO_FAVOURITES", payload: product });
 
-  const removeFromFavourites = (id) =>
-    dispatch({ type: "REMOVE_FROM_FAVOURITES", payload: id });
+  const removeFromFavourites = (_id) =>
+    dispatch({ type: "REMOVE_FROM_FAVOURITES", payload: _id });
 
-  const inFavourites = (id) => favourites.some((item) => item.id === id);
+  const inFavourites = (_id) => favourites.some((item) => item._id === _id);
   
   return (
     <FavouritesContext.Provider

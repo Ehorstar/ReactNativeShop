@@ -20,14 +20,14 @@ const Favourites = () => {
     <View>
       <FlatList
         data={favourites}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item._id}
         numColumns={2}
         columnWrapperStyle={{ gap: 12 }}
         contentContainerStyle={{ padding: 12 }}
         renderItem={({ item }) => (
           <ProductCard
             product={item}
-            onProductPress={() => router.push(`/product/${item.id}`)}
+            onProductPress={() => router.push(`/product/${item._id}`)}
           />
         )}
       />
