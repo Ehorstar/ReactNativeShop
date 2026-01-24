@@ -8,7 +8,7 @@ import {
 import ProductCard from "../../components/ProductCard";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ProductsAPI } from "../../api/products"; // ✅ шлях перевір
+import { ProductsAPI } from "../../api/products";
 
 const HomeScreen = () => {
   const router = useRouter();
@@ -19,8 +19,8 @@ const HomeScreen = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const json = await ProductsAPI.getAll(); // ✅ запит до бекенду
-        setProducts(json.data); // бо бекенд повертає { data: [...] }
+        const json = await ProductsAPI.getAll(); 
+        setProducts(json.data); 
       } catch (e) {
         console.log("Products error:", e.message);
       } finally {
@@ -44,14 +44,14 @@ const HomeScreen = () => {
     <View style={{ flex: 1 }}>
       <FlatList
         data={products}
-        keyExtractor={(item) => item._id} // ✅ Mongo id
+        keyExtractor={(item) => item._id} 
         numColumns={2}
         columnWrapperStyle={{ gap: 12 }}
         contentContainerStyle={{ padding: 12, gap: 12 }}
         renderItem={({ item }) => (
           <ProductCard
             product={item}
-            onProductPress={() => router.push(`/product/${item._id}`)} // ✅ Mongo id
+            onProductPress={() => router.push(`/product/${item._id}`)} 
           />
         )}
       />

@@ -11,10 +11,10 @@ import Button from "../../UI/Button/Button";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../contexts/Cart/CartContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ProductsAPI } from "../../api/products"; // ✅ шлях перевір
+import { ProductsAPI } from "../../api/products"; 
 
 const ProductScreen = () => {
-  const { id } = useLocalSearchParams(); // ✅ з [id].jsx
+  const { id } = useLocalSearchParams(); 
   const { addToCart, isInCart } = useContext(CartContext);
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -26,7 +26,7 @@ const ProductScreen = () => {
     const loadProduct = async () => {
       try {
         const json = await ProductsAPI.getById(id);
-        setProduct(json.data); // бекенд: { data: product }
+        setProduct(json.data); 
       } catch (e) {
         console.log("Product error:", e.message);
         setProduct(null);
