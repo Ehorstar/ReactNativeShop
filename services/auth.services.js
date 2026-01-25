@@ -6,11 +6,12 @@ export const registerRequest = async (values) => {
 };
 
 export const loginRequest = async (values) => {
+  
   const { data } = await api.post("/login", values);
   return data;
 };
 
 export const getAuthUser = async () => {
-  const { data } = await api.post("/auth-user");
+  const { data } = await api.get("/auth-user");
   return data;
 };
