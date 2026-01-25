@@ -8,35 +8,24 @@ import {
   View,
 } from "react-native";
 import Button from "../../UI/Button/Button";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { CartContext } from "../../contexts/Cart/CartContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ProductsAPI } from "../../api/products"; 
+import { useQuery } from "@tanstack/react-query";
+import { getProductById } from "../../services/products.services";
 
 const ProductScreen = () => {
-  const { id } = useLocalSearchParams(); 
+  const { id } = useLocalSearchParams();
   const { addToCart, isInCart } = useContext(CartContext);
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadProduct = async () => {
-      try {
-        const json = await ProductsAPI.getById(id);
-        setProduct(json.data); 
-      } catch (e) {
-        console.log("Product error:", e.message);
-        setProduct(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) loadProduct();
-  }, [id]);
+  const { data: product, isLoading: loading } = useQuery({
+    queryKey: ["product", id],
+    queryFn: () => getProductById(id),
+    enabled: !!id,
+  });
+  
 
   if (loading) {
     return (
@@ -70,7 +59,7 @@ const ProductScreen = () => {
       <View style={[styles.footer, { paddingBottom: insets.bottom }]}>
         <Text style={styles.price}>${product.price}</Text>
         <Button
-          text={isInCart(product._id) ? "В кошику" : "В кошик"} 
+          text={isInCart(product._id) ? "В кошику" : "В кошик"}
           variant="primary"
           style={styles.button}
           onPress={() => {

@@ -3,6 +3,9 @@ import { StyleSheet } from "react-native";
 import CartProvider from "../contexts/Cart/CartContext";
 import FavouritesProvider from "../contexts/Favourites/FavouritesContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const NavigationLayout = () => {
   return (
@@ -18,13 +21,15 @@ const NavigationLayout = () => {
 
 const RootLayout = () => {
   return (
-    <GestureHandlerRootView>
-      <FavouritesProvider>
-        <CartProvider>
-          <NavigationLayout />
-        </CartProvider>
-      </FavouritesProvider>
-    </GestureHandlerRootView>
+    <QueryClientProvider client={queryClient}>
+      <GestureHandlerRootView>
+        <FavouritesProvider>
+          <CartProvider>
+            <NavigationLayout />
+          </CartProvider>
+        </FavouritesProvider>
+      </GestureHandlerRootView>
+    </QueryClientProvider>
   );
 };
 

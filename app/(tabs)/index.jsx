@@ -7,29 +7,19 @@ import {
 } from "react-native";
 import ProductCard from "../../components/ProductCard";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
-import { ProductsAPI } from "../../api/products";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "../../services/products.services";
+import { RefreshControl } from "react-native-gesture-handler";
 
 const HomeScreen = () => {
   const router = useRouter();
 
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const obj = useQuery({
+    queryKey: ["products"],
+    queryFn: () => getProducts(),
+  });
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const json = await ProductsAPI.getAll(); 
-        setProducts(json.data); 
-      } catch (e) {
-        console.log("Products error:", e.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadProducts();
-  }, []);
+  const { data: products = [], isLoading: loading, isRefetching, refetch } = obj;
 
   if (loading) {
     return (
@@ -44,16 +34,19 @@ const HomeScreen = () => {
     <View style={{ flex: 1 }}>
       <FlatList
         data={products}
-        keyExtractor={(item) => item._id} 
+        keyExtractor={(item) => item.id}
         numColumns={2}
         columnWrapperStyle={{ gap: 12 }}
         contentContainerStyle={{ padding: 12, gap: 12 }}
         renderItem={({ item }) => (
           <ProductCard
             product={item}
-            onProductPress={() => router.push(`/product/${item._id}`)} 
+            onProductPress={() => router.push(`/product/${item.id}`)}
           />
         )}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }
       />
     </View>
   );
